@@ -1,0 +1,116 @@
+$alto-gray: #DBDBDB;
+$dove-gray: #6B6B6B; 	
+
+$tooltip-width: 100%;
+$arrow-size: 15px;
+$tooltip-padding: 0px 10px;
+$tooltip-primary: $alto-gray;
+$tooltip-secondary: $dove-gray;
+$tooltip-border-radius: 10px;
+
+.c-tooltip {
+	&_trigger {
+		display: block;
+	}
+	&_text { 
+		// placement
+		position: absolute;
+		z-index: 100;
+		// basic color
+		background-color: $tooltip-secondary;
+		// Arrow and tooltip placement
+		&:after {
+			content: " ";
+			position: absolute;
+			border-width: $arrow-size;
+			border-style: solid;
+		}
+		&--full-span {
+			width: 100%;
+		}
+		&--top {
+			bottom: calc(100% + #{$arrow-size + 10px});
+			&:after {
+				margin-left: -$arrow-size;
+				top: 100%;
+				left: 50%;
+				border-color: $tooltip-secondary transparent transparent transparent;
+			}
+		}
+		&--top-left {
+			left: 0;
+			bottom: calc(100% + #{$arrow-size + 10px});
+			&:after {
+				margin-left: -$arrow-size;
+				top: 100%;
+				left: 10%;
+				border-color: $tooltip-secondary transparent transparent transparent;
+			}
+		}
+		&--top-right {
+			bottom: calc(100% + #{$arrow-size + 10px});
+			right: 0;
+			&:after {
+				margin-left: -$arrow-size;
+				top: 100%;
+				left: 90%;
+				border-color: $tooltip-secondary transparent transparent transparent;
+			}
+		}
+		&--bottom {
+			top: calc(100% + #{$arrow-size + 10px});
+			&:after {
+				margin-left: -$arrow-size;
+				bottom: 100%;
+				left: 50%;
+				border-color: transparent transparent $tooltip-secondary transparent;
+			}
+		}
+		&--top-theme-1 {
+			// styling 
+			width: 100%;
+			padding: 5px 10px;
+			text-align: center;
+			box-shadow: 0 0 5px 0 gray;
+			background-color: $tooltip-secondary;
+			color: $tooltip-primary;	
+			// arrow color
+			&:after {
+				border-color: $tooltip-secondary transparent transparent transparent;			
+			}
+			// transition
+			transition: all 0.2s ease-in-out;
+			transform: translateY(10px);
+			opacity: 0;
+			pointer-events: none;
+		}
+		&--top-theme-1-open {
+			opacity: 1;
+			pointer-events: all;
+			transform: translateY(0px);
+		}
+		&--top-theme-2 {
+			// styling
+			padding: 5px 10px;
+			text-align: center;
+			border-radius: 10px;
+			box-shadow: 0 0 10px 0 gray;
+			background-color: $tooltip-primary;
+			color: $tooltip-secondary;
+			// arrow color
+			&:after {
+				border-color: $tooltip-primary transparent transparent transparent;			
+			}
+			// transition
+			transition: all 0.2s ease-in-out;
+			transform: translateY(-10px);
+			opacity: 0;
+			pointer-events: none;
+		}
+		&--top-theme-2-open {
+			opacity: 1;
+			pointer-events: all;
+			transform: translateY(0px);
+		}
+	}
+}

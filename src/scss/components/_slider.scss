@@ -1,0 +1,68 @@
+.c-slider {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    &_track {
+        user-select: none;
+        transition: all 0.5s ease-in-out;
+        position: relative;  
+        &--theme-1 {
+            transform: translateX(0%);
+            @media only screen and (min-width: 768px) {
+                transform: translateX(16.666%);
+            }
+            @media only screen and (min-width: 1200px) {
+                transform: translateX(12.5%);
+            }              
+        }   
+    }
+    &_button {
+        cursor: pointer;
+        display: inline;     
+    }
+    &_button-inner {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 0;
+        height: 100%;
+        padding: 10px;
+        &--next {
+            z-index: 50;
+            position: absolute;
+            right: 0;
+        }   
+        &--prev {
+            z-index: 50;
+            position: absolute;
+            left: 0;
+        }
+    }
+    &_image {
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+.c-slide {
+    transition: transform 0s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    &--theme-1 {
+        width: 100%;
+        @media only screen and (min-width: 768px) {
+            width: 33.333%;
+        }
+        @media only screen and (min-width: 1200px) {
+            width: 25%;
+        }
+    }
+    &--theme-2 {
+        width: 100%;
+        @media only screen and (min-width: 768px) {
+            width: 300px;
+        }
+        @media only screen and (min-width: 1200px) {
+            width: 150px;
+        }
+    }
+}

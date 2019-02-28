@@ -1,0 +1,72 @@
+
+.c-animator {
+    position: relative;
+    overflow: hidden;
+}
+
+.c-centered {
+    width: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    top: 50%;
+
+}
+
+.c-block {
+
+    transition-property: opacity, max-height, background-color;
+    transition-timing-function: ease-in-out;
+    display: block;
+    width: 100%;
+    max-height: 0;
+    background-color: lightgray;
+
+    &--fade-in {
+        max-height: 300px;
+    }
+    	
+    &_item {
+
+        color: white;
+        font-size: 16px;        
+        text-align: center;
+        display: block;
+        white-space: nowrap;
+        letter-spacing: 4px;
+        font-weight: thin;
+        text-transform: uppercase;
+        // anim
+        transition-duration: 0.2s; // fallback value
+        transition-property: opacity, max-width, margin, color;
+        transition-timing-function: ease-in-out;        
+        max-width: 0%;
+        margin: 0 50%;
+        opacity: 0;
+
+        &-test {
+            transition: 0.2s margin ease-in-out;
+            padding: 20px 12px;
+            background-color: white;
+            border-bottom: solid thin lightgray;
+        }
+
+        &:hover > &-test {
+			  margin: 0 10%;
+        }
+
+        &--fade-in {
+            // anim
+            color: darkslategrey;
+            opacity: 1;
+            margin: 0%;
+            max-width: 100%;
+        }
+
+    }
+
+    &_link {
+        color: darkslategray;        
+    }
+
+}
