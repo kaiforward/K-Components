@@ -60,7 +60,7 @@ export const animationHelpers: any = {
     },
 
     /*
-    ** Use promise and set timeout to create timer for use in await / async
+    ** Use promise and set timeout to create animation timer for use in await / async
     */
     timer: function(animationTime: number){
         return new Promise((resolve , reject)=>{

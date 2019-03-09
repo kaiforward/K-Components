@@ -1,4 +1,4 @@
-import { ADD_TODO, TOGGLE_TODO, COMPLETE, INCOMPLETE, ALL } from '../actions/toDo'; 
+import { ADD_TODO, TOGGLE_TODO, COMPLETE, INCOMPLETE, ALL, UPDATE_TEXT } from '../actions/toDo'; 
 import ToDo from '../components/ToDo/ToDo';
 
 const initialState = {
@@ -32,6 +32,15 @@ export default function(state: any = initialState, action: any) {
             return {
                 ...state,
                 toDos: [...toDos]
+            }
+        }
+
+        case UPDATE_TEXT: {
+            const { title, text } = action.payload;
+            return {
+                ...state,
+                title: title,
+                text: text
             }
         }
 

@@ -20,10 +20,15 @@ declare interface Classes {
     [key: string]: string
 }
 
-interface ToDoItem {
+declare interface ToDoItem {
     uniqueId: string;
     text: string;
     title: string;
     isComplete: boolean;
     date: string;
+}
+
+declare interface ToDoText {
+    title: string,
+    text: string
 }

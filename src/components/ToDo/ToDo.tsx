@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect, ReactReduxContext } from "react-redux";
-import { addToDo, toggleToDo, INCOMPLETE, COMPLETE, ALL } from "../../actions/toDo";
+import { addToDo, updateText, toggleToDo, INCOMPLETE, COMPLETE, ALL } from "../../actions/toDo";
 import store from "../../store/store";
 import { element } from 'prop-types';
 import ToDoItem from './ToDoItem';
@@ -12,8 +12,8 @@ import { ToDoMode } from './ToDoMode';
 interface TodoProps {
     toDoItems: Array<any>;
     mode: string;
-    toDoAction: any;
-    completeToDoAction: any;
+    text: string;
+    title: string;
 }
 
 interface ToDoState {
@@ -30,10 +30,6 @@ class ToDo extends React.Component<TodoProps, ToDoState> {
 
 	constructor(props: TodoProps) {
         super(props);
-        this.state = { 
-            text: "",
-            title: "" 
-        };
         this.handleAddToDo = this.handleAddToDo.bind(this);
         this.updateInput = this.updateInput.bind(this); 
         this.updateText = this.updateText.bind(this);
@@ -42,48 +38,46 @@ class ToDo extends React.Component<TodoProps, ToDoState> {
     updateInput = ( event: any ) => {
         
         const { value } = event.target;
-        this.setState({ 
-            title: value
-        });
-
+        store.dispatch(updateText({
+            title: value, 
+            text: this.props.text
+        }));
     };
 
     updateText = ( event: any ) => {
 
         const { value } = event.target;
-        this.setState({ 
+        store.dispatch(updateText({
+            title: this.props.title, 
             text: value
-        });   
+        }));
 
     }
 
     handleAddToDo = () => {
 
-        const { toDoAction, toDoItems } = this.props;
-        const { title, text } = this.state;
+        const { toDoItems, title, text } = this.props;
 
         if (text && title) {
 
-            store.dispatch(toDoAction({
+            store.dispatch(addToDo({
                 uniqueId: title+toDoItems.length.toString(),
                 text: text,
                 title: title,
                 isComplete: false,
                 date: new Date().toDateString() + ' ' + new Date().toTimeString()
+            }));      
+            store.dispatch(updateText({
+                title: "", 
+                text: ""
             }));
-            this.setState({ 
-                text: "",
-                title: ""
-            });       
-
         }
 
     };
 
     render() {
 
-        const { toDoItems, mode } = this.props;
-        const { text, title } = this.state;
+        const { toDoItems, mode, text, title } = this.props;
 
         return(
             <div className={"c-todo"}>
@@ -127,13 +121,13 @@ const mapStateToProps = (state: any) => {
     return { 
         toDoItems: toDo.toDos,
         mode: toDo.mode,
-        toDoAction: addToDo,
-        completeToDoAction: toggleToDo
+        text: toDo.text,
+        title: toDo.title
     };
 
 }
 
 export default connect(
     mapStateToProps,
-    { addToDo, toggleToDo }
+    { addToDo, toggleToDo, updateText }
 )(ToDo);
