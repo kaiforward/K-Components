@@ -19,3 +19,11 @@ declare interface TimeProps {
 declare interface Classes {
     [key: string]: string
 }
+
+interface ToDoItem {
+    uniqueId: string;
+    text: string;
+    title: string;
+    isComplete: boolean;
+    date: string;
+}

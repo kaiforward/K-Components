@@ -4,6 +4,7 @@ import { Switch } from '../Switch/Switch';
 
 interface Props {
     openOnStart?: boolean;
+    animateOnStart?: boolean;
 }
 
 interface State {
@@ -17,8 +18,8 @@ export class Menu extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            openMenu: false,
-            openMenuItem: false,
+            openMenu: this.props.openOnStart,
+            openMenuItem: this.props.openOnStart,
             isAnimated: false
         }
         this.menuTrigger = this.menuTrigger.bind(this);
@@ -28,9 +29,9 @@ export class Menu extends React.Component<Props, State> {
 
     componentDidMount() {
 
-        const { openOnStart } = this.props;
+        const { animateOnStart } = this.props;
 
-        if (openOnStart) {
+        if (animateOnStart) {
             this.setState({
                 openMenu: true
             });            
@@ -67,13 +68,13 @@ export class Menu extends React.Component<Props, State> {
     render() {
 
         const { openMenu, openMenuItem, isAnimated } = this.state;
-        const { openOnStart } = this.props;
+        const { openOnStart, animateOnStart } = this.props;
         const clickHandler: any = !openMenu ? this.menuTrigger : this.menuItemTrigger;
 
         return (
             <div>
                 <div className="o-form-item">
-                    <Switch openOnStart={openOnStart} clickHandler={ isAnimated ?  undefined : clickHandler } isDisabled={isAnimated}/> Linked animated components
+                    <Switch openOnStart={openOnStart} animateOnStart={animateOnStart} clickHandler={ isAnimated ?  undefined : clickHandler } isDisabled={isAnimated}/> Linked animated components
                 </div>
                 <Toggle time={750} delay={0} className={"c-block"} animClass={"c-block--fade-in"} toggle={openMenu} callBack={ openMenu ? this.menuItemTrigger : this.animationFinished }>
                     <Toggle time={350} delay={!openMenuItem ? 450: 0} className={"c-block_item"} animClass={"c-block_item--fade-in"} toggle={openMenuItem} callBack={ !openMenuItem ? this.menuTrigger : undefined }>

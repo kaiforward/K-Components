@@ -8,6 +8,7 @@ interface Props {
     clickHandler?: any;
     isDisabled?: boolean;
     openOnStart?: boolean;
+    animateOnStart?: boolean;
 
 }
 
@@ -19,13 +20,14 @@ interface State {
 export class Switch extends React.Component<Props, State> {
 
     static defaultProps = {
+        openOnStart: false,
         classNames: themes.themeOne
     }
 
     constructor(props: Props) {
         super(props);
         this.state = {
-            openSwitch: false,
+            openSwitch: this.props.openOnStart,
             isAnimated: false
         }
         this.animationFinished = this.animationFinished.bind(this);
@@ -35,13 +37,14 @@ export class Switch extends React.Component<Props, State> {
 
     componentDidMount() {
 
-        const { openOnStart } = this.props;
+        const { animateOnStart } = this.props;
 
-        if (openOnStart) {
+        if (animateOnStart) {
             this.setState({
                 openSwitch: true
             });            
         }
+
     }
 
     toggle() {
@@ -78,8 +81,8 @@ export class Switch extends React.Component<Props, State> {
         return (
             <div onClick={ this.clickHandlers } className={switchMain}>
                 <Toggle toggle={openSwitch} time={250} delay={0} className={switchBody} animClass={switchBodyToggleOn}>
-                    <Toggle toggle={!openSwitch} time={250} delay={0} className={switchLabel + ' ' +  switchLabelOn} animClass={switchLabelHidden} >on</Toggle>
-                    <Toggle toggle={openSwitch} time={250} delay={0} className={switchLabel + ' ' +  switchLabelOff} animClass={switchLabelHidden} >off</Toggle>
+                    <Toggle toggle={!openSwitch} time={250} delay={0} className={switchLabel + ' ' +  switchLabelOn} animClass={switchLabelHidden}>on</Toggle>
+                    <Toggle toggle={openSwitch} time={250} delay={0} className={switchLabel + ' ' +  switchLabelOff} animClass={switchLabelHidden}>off</Toggle>
                     <Toggle toggle={openSwitch} time={250} delay={0} className={switchToggle} animClass={switchToggleOn} callBack={this.animationFinished}/>
                 </Toggle>                
             </div>     

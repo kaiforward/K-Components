@@ -7,6 +7,7 @@ import { Toggle } from './components/Toggle/Toggle';
 import { Menu } from './components/AnimatedComponents/Menu/Menu';
 import { Switch } from './components/AnimatedComponents/Switch/Switch';
 import { themes } from './components/AnimatedComponents/Switch/style';
+import ToDo from './components/ToDo/ToDo';
 import './scss/styles.scss';
 
 class App extends React.Component {
@@ -14,24 +15,25 @@ class App extends React.Component {
 		return (
 
 			<div className="o-wrapper">
+				<ToDo/>
+
+   				<div className="o-form-item">
+   					<Menu animateOnStart={true}></Menu>
+   				</div>
+
+   				<hr/>
+
+   				<div className="o-form-item">
+   					<Menu></Menu>
+   				</div>
+
+   				<div className="o-form-item">
+   					<Switch classNames={themes.themeTwo}/>
+   				</div>	
 				
-				<div className="o-form-item">
-					<Menu openOnStart={true}></Menu>
-				</div>
-
-				<hr/>
-
-				<div className="o-form-item">
-					<Menu></Menu>
-				</div>
-
-				<div className="o-form-item">
-					<Switch classNames={themes.themeTwo}/>
-				</div>	
-				
-				<div className="o-form-item">
-					Popup Image
-          			<Popup
+   				<div className="o-form-item">
+   					Popup Image
+             			<Popup
 						buttonOpen={
 							<img style={{ width: "100%" }} src="https://via.placeholder.com/720" alt="" />
 						}
