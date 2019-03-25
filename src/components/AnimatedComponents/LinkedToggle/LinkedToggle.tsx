@@ -32,7 +32,7 @@ class LinkedToggle extends React.Component<Props, State> {
             this.setState({
                 isAnimated: true,
                 open: !this.state.open
-            })
+            });
         }
 
     }
@@ -40,7 +40,7 @@ class LinkedToggle extends React.Component<Props, State> {
     isAnimated() {
         this.setState({
             isAnimated: false
-        })
+        });
     }
 
     render() {

@@ -40,7 +40,7 @@ class Slide extends React.Component<SlideProps, SlideState> {
 		if ( position > translateX * ( (siblings*2) -2 ) || position < -translateX * (siblings - 2 ) || position % 100 !== 0.0 ) {			
 			transitionDuration = '0.0s'
 		} else {
-			transitionDuration = '0.3s'
+			transitionDuration = '0.5s'
 		} 
 
 		const styles: object = {
