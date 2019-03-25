@@ -7,28 +7,28 @@ import ToDoItem from './ToDoItem';
 import { ToDoInput } from './ToDoInput';
 import { ToDoTextArea } from './ToDoTextarea';
 import { Toggle } from '../Toggle/Toggle';
-import { ToDoMode } from './ToDoMode';
+import ToDoMode from './ToDoMode';
 
-interface TodoProps {
+interface Props {
     toDoItems: Array<any>;
     mode: string;
     text: string;
     title: string;
 }
 
-interface ToDoState {
+interface State {
     text: string;
     title: string;
 }
 
-class ToDo extends React.Component<TodoProps, ToDoState> {
+class ToDo extends React.Component<Props, State> {
     
     static defaultProps = {
         toDoItems: [],
         mode: ALL,
     }
 
-	constructor(props: TodoProps) {
+	constructor(props: Props) {
         super(props);
         this.handleAddToDo = this.handleAddToDo.bind(this);
         this.updateInput = this.updateInput.bind(this); 
@@ -93,11 +93,11 @@ class ToDo extends React.Component<TodoProps, ToDoState> {
                 <div className="c-todo_list">  
                 {
                     toDoItems.map((element, index) => {
-                        const isVisible: boolean = Boolean((mode === COMPLETE && element.isComplete) || (mode === INCOMPLETE && !element.isComplete) || (mode === ALL));
+                        const isVisible: boolean = Boolean((mode === ALL) || (mode === COMPLETE && element.isComplete) || (mode === INCOMPLETE && !element.isComplete));
                         return (
-                            <Toggle key={ element.uniqueId+`_${index}`+'_TOGGLE' } toggle={!isVisible} time={600} delay={index * 100} className={"c-todo_anim"} animClass={"c-todo_anim--hide"}>
+                            <Toggle key={ element.uniqueId+`_${index}`+'_TOGGLE' } toggle={isVisible} time={600} delay={index * 100} className={"c-todo_anim"} animClass={"c-todo_anim--show"}>
                                 <ToDoItem 
-                                    key={ element.uniqueId }
+                                    key={ element.uniqueId+`_${index}` }
                                     uniqueId={ element.uniqueId } 
                                     title={ element.title } 
                                     text={ element.text } 
@@ -129,5 +129,5 @@ const mapStateToProps = (state: any) => {
 
 export default connect(
     mapStateToProps,
-    { addToDo, toggleToDo, updateText }
+    { addToDo, updateText }
 )(ToDo);

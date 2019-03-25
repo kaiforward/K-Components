@@ -1,13 +1,12 @@
 import * as React from 'react';
+import { CheckHeight } from '../AnimatedComponents/CheckHeight/CheckHeight';
 
 interface PanelProps {
-    open?: boolean, 
-    title?: any, 
-    handleClick?: any, 
-    titleClass?: string,
-    titleTransition?: string, 
-    panelBodyClass?: string, 
-    panelTransition?: string
+    open?: boolean; 
+	title?: any;
+	callback?: any;
+	time?: number;
+    handleClick?: any; 
 }
 
 class Panel extends React.Component<PanelProps> {
@@ -18,25 +17,24 @@ class Panel extends React.Component<PanelProps> {
     
     static defaultProps = {
         open: false,
-        titleClass: 'c-accordion_title',
-        titleTransition: 'c-accordion_title--open',
-        panelBodyClass: 'c-accordion_panel-body',
-        panelTransition: 'c-accordion_panel-body--open'
+		time: 300
     }
 
 	render() {
 
-		const { open, title, handleClick, titleClass, titleTransition, panelBodyClass, panelTransition } = this.props;
+		const { open, title, handleClick, callback, time } = this.props;
 
 		return(
 
 			<div className={ 'c-accordion_panel' }>
-				<div onClick={ handleClick } className={ titleClass + ' ' + (open ? titleTransition : '') }>
+				<div onClick={ handleClick } className={ 'c-accordion_title ' + (open ? 'c-accordion_title--open' : '') }>
 					{ title } 
 				</div>
-				<div className={ panelBodyClass + ' ' + (open ? panelTransition : '') }>
-					{ this.props.children }
-				</div>
+				<CheckHeight time={500} open={open} callback={callback}>
+					<div className={ 'c-accordion_panel-body ' + (open ? 'c-accordion_panel-body--open' : '') }>
+						{ this.props.children }
+					</div>
+				</CheckHeight>
 			</div>
 
 		);
@@ -51,7 +49,8 @@ interface AccordionProps {
 }
 
 interface AccordionState {
-    open: Array<boolean>
+	open: Array<boolean>;
+	isAnimated: boolean;
 }
 
 class Accordion extends React.Component<AccordionProps, AccordionState> {
@@ -66,10 +65,12 @@ class Accordion extends React.Component<AccordionProps, AccordionState> {
 		}
 
 		this.state = {
-			open: openStates
+			open: openStates,
+			isAnimated: false,
 		}
 
 		this.handleClick = this.handleClick.bind(this);
+		this.isAnimated = this.isAnimated.bind(this);
 
     }
     
@@ -78,17 +79,28 @@ class Accordion extends React.Component<AccordionProps, AccordionState> {
     }
 
 	handleClick = (section: number) => {
-		// Copy state to reassign later so changes to single items in the array will still cause a re-render
-		let openStates: Array<boolean> = [...this.state.open];
 
-		for(var i = 0; i < openStates.length; i++) {
-			openStates[i] = section === i ? !openStates[i] : openStates[i];
+		if (!this.state.isAnimated) {
+
+			// Copy state to reassign later so changes to single items in the array will still cause a re-render
+			let openStates: Array<boolean> = [...this.state.open];
+
+			for(var i = 0; i < openStates.length; i++) {
+				openStates[i] = section === i ? !openStates[i] : openStates[i];
+			}
+
+			this.setState({
+				open: openStates,
+				isAnimated: true
+			});
 		}
 
-		this.setState({
-			open: openStates
-		})
+	}
 
+	isAnimated() {
+		this.setState({
+			isAnimated: false
+		});
 	}
 
 	render() {
@@ -102,7 +114,8 @@ class Accordion extends React.Component<AccordionProps, AccordionState> {
 					React.Children.map(children, (child, i) => {
 						return React.cloneElement(child, {
 							open : this.state.open[i],
-							handleClick: () => this.handleClick(i)
+							handleClick: () => this.handleClick(i),
+							callback: this.isAnimated
 						});
 					})
 				}

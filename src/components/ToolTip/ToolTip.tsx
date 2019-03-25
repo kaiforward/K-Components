@@ -1,13 +1,9 @@
 import * as React from 'react';
 
 interface ToolTipProps {
-    alignment: string, 
-    tooltipClass?: string, 
+    alignment: string,
     tooltipText?: any, 
-    tooltipTextTransition?: string, 
-    tooltipTextTheme?: string, 
     triggerElement?: any, 
-    triggerElementClass?: string, 
     customPlacement?: any  
 }
 interface ToolTipState {
@@ -37,23 +33,20 @@ class ToolTip extends React.Component<ToolTipProps, ToolTipState> {
 	render() {
 		
 		const { 
-			alignment, 
-			tooltipClass, 
+			alignment,
 			tooltipText, 
-			tooltipTextTransition, 
-			tooltipTextTheme, 
-			triggerElement, 
-			triggerElementClass, 
+			triggerElement,  
 			customPlacement  
 		} = this.props;
+		const { open } = this.state;
 		
-		const alignClasses: string = 'c-tooltip_text c-tooltip_text--'+alignment+' ';
-		const styleClasses: string = ( tooltipTextTheme ? tooltipTextTheme : '') + ' ' + ( this.state.open ? tooltipTextTransition: '' );
+		const alignClasses: string = 'c-tooltip_text c-tooltip_text--'+alignment;
+		const styleClasses: string = open ? ' c-tooltip_text--open': '' ;
 		
 		return(
 			
-			<div className={ 'c-tooltip ' + ( tooltipClass ? tooltipClass : '' ) }>
-				<div onClick={ this.handleClick } className={ triggerElementClass ? triggerElementClass : '' }>
+			<div className={ 'c-tooltip'}>
+				<div onClick={ this.handleClick }>
 					{ triggerElement }
 				</div>
 				<div className={ alignClasses + styleClasses } style={ customPlacement }>

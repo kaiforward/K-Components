@@ -21,6 +21,7 @@
         display: inline;     
     }
     &_button-inner {
+        outline: 0;
         background-color: rgba(255, 255, 255, 0.1);
         border: 0;
         height: 100%;
@@ -38,7 +39,14 @@
     }
     &_image {
         width: 100%;
-        padding: 20px;
+        object-fit: cover;
+        height: 400px;
+        @media only screen and (min-width: 768px) {
+            height: 350px;
+        }
+        @media only screen and (min-width: 1200px) {
+            height: 300px;
+        }
     }
 }
 

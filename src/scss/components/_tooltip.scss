@@ -15,9 +15,23 @@ $tooltip-border-radius: 10px;
 	&_text { 
 		// placement
 		position: absolute;
-		z-index: 100;
+		z-index: 99;
 		// basic color
 		background-color: $tooltip-secondary;
+		// styling 
+		width: 100%;
+		max-width: 768px;
+		padding: 5px 10px;
+		text-align: center;
+		box-shadow: 0 0 5px 0 gray;
+		background-color: $tooltip-secondary;
+		color: $tooltip-primary;
+		pointer-events: none;
+		opacity: 0;
+		transition: opacity 0.2s ease-in-out;	
+		p {
+			margin: 0;
+		}
 		// Arrow and tooltip placement
 		&:after {
 			content: " ";
@@ -25,14 +39,17 @@ $tooltip-border-radius: 10px;
 			border-width: $arrow-size;
 			border-style: solid;
 		}
-		&--full-span {
-			width: 100%;
+		&--open {
+			opacity: 1;
+			pointer-events: all;
 		}
 		&--top {
 			bottom: calc(100% + #{$arrow-size + 10px});
+			left: 50%;
+			transform: translateX(-50%);
 			&:after {
 				margin-left: -$arrow-size;
-				top: 100%;
+				top: 99%;
 				left: 50%;
 				border-color: $tooltip-secondary transparent transparent transparent;
 			}
@@ -42,7 +59,7 @@ $tooltip-border-radius: 10px;
 			bottom: calc(100% + #{$arrow-size + 10px});
 			&:after {
 				margin-left: -$arrow-size;
-				top: 100%;
+				top: 99%;
 				left: 10%;
 				border-color: $tooltip-secondary transparent transparent transparent;
 			}
@@ -52,65 +69,41 @@ $tooltip-border-radius: 10px;
 			right: 0;
 			&:after {
 				margin-left: -$arrow-size;
-				top: 100%;
+				top: 99%;
 				left: 90%;
 				border-color: $tooltip-secondary transparent transparent transparent;
 			}
 		}
 		&--bottom {
 			top: calc(100% + #{$arrow-size + 10px});
+			left: 50%;
+			transform: translateX(-50%);
 			&:after {
 				margin-left: -$arrow-size;
-				bottom: 100%;
+				bottom: 99%;
 				left: 50%;
 				border-color: transparent transparent $tooltip-secondary transparent;
 			}
 		}
-		&--top-theme-1 {
-			// styling 
-			width: 100%;
-			padding: 5px 10px;
-			text-align: center;
-			box-shadow: 0 0 5px 0 gray;
-			background-color: $tooltip-secondary;
-			color: $tooltip-primary;	
-			// arrow color
+		&--bottom-left {
+			top: calc(100% + #{$arrow-size + 10px});
+			left: 0;
 			&:after {
-				border-color: $tooltip-secondary transparent transparent transparent;			
+				margin-left: -$arrow-size;
+				bottom: 99%;
+				left: 10%;
+				border-color: transparent transparent $tooltip-secondary transparent;
 			}
-			// transition
-			transition: all 0.2s ease-in-out;
-			transform: translateY(10px);
-			opacity: 0;
-			pointer-events: none;
 		}
-		&--top-theme-1-open {
-			opacity: 1;
-			pointer-events: all;
-			transform: translateY(0px);
-		}
-		&--top-theme-2 {
-			// styling
-			padding: 5px 10px;
-			text-align: center;
-			border-radius: 10px;
-			box-shadow: 0 0 10px 0 gray;
-			background-color: $tooltip-primary;
-			color: $tooltip-secondary;
-			// arrow color
+		&--bottom-right {
+			top: calc(100% + #{$arrow-size + 10px});
+			right: 0;
 			&:after {
-				border-color: $tooltip-primary transparent transparent transparent;			
+				margin-left: -$arrow-size;
+				bottom: 99%;
+				right: 10%;
+				border-color: transparent transparent $tooltip-secondary transparent;
 			}
-			// transition
-			transition: all 0.2s ease-in-out;
-			transform: translateY(-10px);
-			opacity: 0;
-			pointer-events: none;
-		}
-		&--top-theme-2-open {
-			opacity: 1;
-			pointer-events: all;
-			transform: translateY(0px);
 		}
 	}
 }

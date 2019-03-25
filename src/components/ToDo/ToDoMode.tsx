@@ -1,22 +1,23 @@
 import * as React from 'react';
+import { connect } from "react-redux";
 import { setVisibility } from "../../actions/toDo";
 import store from "../../store/store";
 
-interface TodoModeProps {
+interface Props {
     mode: string
 }
 
-interface ToDoModeState {
+interface State {
     // empty
 }
 
-class ToDoMode extends React.Component<TodoModeProps, ToDoModeState> {
+class ToDoMode extends React.Component<Props, State> {
     
     static defaultProps = {
         mode: 'ALL'
     }
 
-	constructor(props: TodoModeProps) {
+	constructor(props: Props) {
         super(props);
         this.setModeAction = this.setModeAction.bind(this);
     }
@@ -33,10 +34,13 @@ class ToDoMode extends React.Component<TodoModeProps, ToDoModeState> {
 
         const { children } = this.props;
         return(
-            <button className={"c-todo_button"} onClick={ this.setModeAction }>{ children }</button>
+            <button type="button" className={"c-todo_button"} onClick={ this.setModeAction }>{ children }</button>
         );
 
     }
 }
 
-export { ToDoMode };
+export default connect(
+    null,
+    { setVisibility }
+)(ToDoMode);

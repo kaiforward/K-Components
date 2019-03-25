@@ -1,22 +1,22 @@
 import * as React from 'react';
 
-interface TodoInputProps {
+interface Props {
     value: string,
     elementType: string;
     onChangeAction: any
 }
 
-interface ToDoInputState {
+interface State {
     // empty
 }
 
-class ToDoInput extends React.Component<TodoInputProps, ToDoInputState> {
+class ToDoInput extends React.Component<Props, State> {
     
     static defaultProps = {
         textValue: ""
     }
 
-	constructor(props: TodoInputProps) {
+	constructor(props: Props) {
         super(props);
     }
 

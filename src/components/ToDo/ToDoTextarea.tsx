@@ -1,22 +1,22 @@
 import * as React from 'react';
 
-interface TodoTextareaProps {
+interface Props {
     value: string,
     elementType: string;
     onChangeAction: any
 }
 
-interface ToDoTextareaState {
+interface State {
     text: string
 }
 
-class ToDoTextArea extends React.Component<TodoTextareaProps, ToDoTextareaState> {
+class ToDoTextArea extends React.Component<Props, State> {
     
     static defaultProps = {
         value: ""
     }
 
-	constructor(props: TodoTextareaProps) {
+	constructor(props: Props) {
         super(props);
     }
 

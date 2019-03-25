@@ -4,7 +4,7 @@ import { addToDo, toggleToDo, setVisibility, INCOMPLETE, COMPLETE, ALL } from ".
 import store from "../../store/store";
 import { IoIosCheckmark, IoIosClose } from "react-icons/io";
 
-interface TodoItemProps {
+interface Props {
     uniqueId: string;
     title: string;
     text: string;
@@ -12,11 +12,11 @@ interface TodoItemProps {
     isComplete: boolean;
 }
 
-interface ToDoItemState {
+interface State {
     // empty
 }
 
-class ToDoItem extends React.Component<TodoItemProps, ToDoItemState> {
+class ToDoItem extends React.Component<Props, State> {
     
     static defaultProps = {
         title: "",
@@ -24,9 +24,8 @@ class ToDoItem extends React.Component<TodoItemProps, ToDoItemState> {
         isComplete: false
     }
 
-	constructor(props: TodoItemProps) {
+	constructor(props: Props) {
         super(props);
-
         this.handleCompleteToDo = this.handleCompleteToDo.bind(this);
     }
 

@@ -1,5 +1,4 @@
 import { ADD_TODO, TOGGLE_TODO, COMPLETE, INCOMPLETE, ALL, UPDATE_TEXT } from '../actions/toDo'; 
-import ToDo from '../components/ToDo/ToDo';
 
 const initialState = {
     toDos: [],
@@ -9,7 +8,6 @@ const initialState = {
 };
 
 export default function(state: any = initialState, action: any) {
-
     switch (action.type) {
 
         case ADD_TODO: {
@@ -28,11 +26,12 @@ export default function(state: any = initialState, action: any) {
                     element.isComplete = isComplete;
                     element.date = date;
                 }
-            });
+            });           
             return {
                 ...state,
                 toDos: [...toDos]
             }
+
         }
 
         case UPDATE_TEXT: {
@@ -50,8 +49,8 @@ export default function(state: any = initialState, action: any) {
                 ...state,
                 mode: type
             }
-        } 
-    
+        }
+
         default:
             return {
                 ...state
