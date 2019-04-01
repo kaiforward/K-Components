@@ -1,4 +1,4 @@
-import { ADD_TODO, TOGGLE_TODO, COMPLETE, INCOMPLETE, ALL, UPDATE_TEXT } from '../actions/toDo'; 
+import { ADD_TODO, TOGGLE_TODO, COMPLETE, INCOMPLETE, ALL, UPDATE_TEXT, REMOVE_TODO } from '../actions/toDo'; 
 
 const initialState = {
     toDos: [],
@@ -16,6 +16,19 @@ export default function(state: any = initialState, action: any) {
                 ...state,
                 toDos: [{ uniqueId, title, text, date, isComplete }, ...state.toDos]
             };
+        }
+
+        case REMOVE_TODO: {
+            const { uniqueId } = action.payload;
+            const { toDos } = state;
+            
+            const newToDos = toDos.filter((toDo: any) => toDo.uniqueId !== uniqueId);
+
+            return {
+                ...state,
+                toDos: [...newToDos]
+            }
+
         }
 
         case TOGGLE_TODO: {

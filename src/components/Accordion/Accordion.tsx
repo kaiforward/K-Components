@@ -9,16 +9,20 @@ interface PanelProps {
     handleClick?: any; 
 }
 
-class Panel extends React.Component<PanelProps> {
+interface PanelState {
+	
+}
+
+class Panel extends React.Component<PanelProps, PanelState> {
 
 	constructor(props: PanelProps) {
-		super(props);
+		super(props);		
     }
     
     static defaultProps = {
         open: false,
 		time: 300
-    }
+	}
 
 	render() {
 

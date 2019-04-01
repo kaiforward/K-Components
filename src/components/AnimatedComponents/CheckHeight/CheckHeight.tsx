@@ -6,6 +6,7 @@ interface Props {
     time?: number;
     open?: boolean;
     callback?: any;
+    animateOnStart?: boolean;
 }
 
 interface State {
@@ -17,7 +18,8 @@ class CheckHeight extends React.Component<Props, State> {
     private ref = null;
     private isAnimated = false;
     static defaultProps = {
-        open: true
+        open: true,
+        animateOnStart: false
     }
 
     constructor(props: Props) {
@@ -29,11 +31,11 @@ class CheckHeight extends React.Component<Props, State> {
 
     componentDidMount() {
 
-        const { transitionNaturalHeight } = animationHelpers;
+        const { transitionNaturalHeight, setTransitionTiming, setStyle } = animationHelpers;
         const ref: HTMLElement = this.ref.current;
-        const { open } = this.props;
+        const { open, time, animateOnStart } = this.props;
 
-        transitionNaturalHeight(ref, 500, open);
+        animateOnStart ? transitionNaturalHeight(ref, time, open) : setStyle({height: open ? "" : "0px" }, ref);
 
     }
 
@@ -56,10 +58,10 @@ class CheckHeight extends React.Component<Props, State> {
         if (!this.isAnimated && this.ref.current) {
 
             this.isAnimated = true;
-            
+
             await transitionNaturalHeight(ref, time, open);
             
-            callback && callback();
+            callback && callback();  
 
             this.isAnimated = false;
 

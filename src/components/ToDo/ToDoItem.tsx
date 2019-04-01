@@ -1,19 +1,22 @@
 import * as React from 'react';
 import { connect, ReactReduxContext } from "react-redux";
-import { addToDo, toggleToDo, setVisibility, INCOMPLETE, COMPLETE, ALL } from "../../actions/toDo";
+import { addToDo, toggleToDo, removeToDo } from "../../actions/toDo";
 import store from "../../store/store";
 import { IoIosCheckmark, IoIosClose } from "react-icons/io";
+import { CheckHeight } from '../AnimatedComponents/CheckHeight/CheckHeight';
 
 interface Props {
+    isOpen: boolean;
     uniqueId: string;
     title: string;
     text: string;
     date: string;
     isComplete: boolean;
+    animationTime: number;
 }
 
 interface State {
-    // empty
+    shouldRemove: boolean
 }
 
 class ToDoItem extends React.Component<Props, State> {
@@ -27,6 +30,12 @@ class ToDoItem extends React.Component<Props, State> {
 	constructor(props: Props) {
         super(props);
         this.handleCompleteToDo = this.handleCompleteToDo.bind(this);
+        this.handleRemoveToDo = this.handleRemoveToDo.bind(this);
+        this.animationFinished = this.animationFinished.bind(this);
+
+        this.state = {
+            shouldRemove: false
+        }
     }
 
     handleCompleteToDo() {
@@ -41,25 +50,50 @@ class ToDoItem extends React.Component<Props, State> {
 
     };
 
+    handleRemoveToDo = () => {
+
+        this.setState({
+            shouldRemove: true
+        })
+
+    };
+
+    animationFinished() {
+        
+        const { uniqueId } = this.props;
+
+        if (uniqueId) {
+
+            store.dispatch(removeToDo({
+                uniqueId
+            }));      
+
+        }
+    }
+    
     render() {
 
-        const { uniqueId, title, text, date, isComplete } = this.props;
+        const { uniqueId, title, text, date, isComplete, isOpen, animationTime } = this.props;
+        const { shouldRemove } = this.state;
 
         return(
-            <div className={"c-todo_item"}>
-                <h3 className={"c-todo_item-title"+(isComplete ? " c-todo_item-title--is-complete" : "")}>
-                    { title } - {!isComplete ? 'Incomplete' : 'Complete Huzzaaaaaaaah!' } 
-                    <button
-                        onClick={ this.handleCompleteToDo } 
-                        className="c-todo_button c-todo_button--icon u-fright">
-                        {!isComplete ? <IoIosClose /> : <IoIosCheckmark />}
-                    </button>
-                </h3>
-                <div className={"c-todo_item-body"}>
-                    <p className={"c-todo_item-text"}> { text } </p>
-                    <p className={"c-todo_item-text"}> Updated : { date }</p>                
-                </div>
-            </div> 
+            <CheckHeight time={animationTime} animateOnStart={true} open={shouldRemove ? false : isOpen} callback={shouldRemove ? this.animationFinished : null}>
+                <div className={"c-todo_item"}>
+                    <h3 className={"c-todo_item-title"+(isComplete ? " c-todo_item-title--is-complete" : "")}>
+                        { title } - {!isComplete ? 'Incomplete' : 'Complete Huzzaaaaaaaah!' } 
+                        <button
+                            onClick={ this.handleCompleteToDo } 
+                            className="c-todo_button c-todo_button--icon u-fright">
+                            {!isComplete ? <IoIosClose /> : <IoIosCheckmark />}
+                        </button>
+                    </h3>
+                    <div className={"c-todo_item-body"}>
+                        <p className={"c-todo_item-text"}> { text } </p>
+                        <p className={"c-todo_item-text"}> Updated : { date }</p>  
+                        <button className="c-todo_button" onClick={ this.handleRemoveToDo }>Remove Todo</button>              
+                    </div>
+                </div>                 
+            </CheckHeight>
         )
     }
 
@@ -67,5 +101,5 @@ class ToDoItem extends React.Component<Props, State> {
 
 export default connect(
     null,
-    { toggleToDo }
+    { toggleToDo, removeToDo }
 )(ToDoItem);

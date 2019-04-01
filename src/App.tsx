@@ -12,6 +12,7 @@ import ToDo from './components/ToDo/ToDo';
 import { CheckHeight } from './components/AnimatedComponents/CheckHeight/CheckHeight';
 import { LinkedToggle } from './components/AnimatedComponents/LinkedToggle/LinkedToggle';
 import { Thingy } from './components/Three/Thingy';
+import { MockForm } from './components/AnimatedComponents/MockForm/MockForm';
 
 
 class App extends React.Component {
@@ -19,6 +20,16 @@ class App extends React.Component {
 		return (
 
 			<div className="o-wrapper">
+
+				<div className="o-form-item">
+					<MockForm></MockForm>
+				</div>
+				<div className="o-form-item">
+					<MockForm></MockForm>
+				</div>
+				<div className="o-form-item">
+					<MockForm></MockForm>
+				</div>
 
 				<LinkedToggle>
 					<div className="o-form-item">
@@ -64,8 +75,23 @@ class App extends React.Component {
 						<img className="popup-image" src="https://picsum.photos/400/400" alt="" />
 					</Popup>
 				</div>
+
+				<div className="o-form-item">
+   					Popup Image
+             			<Popup
+						buttonOpen={
+							<button className="c-button"> Popup </button>
+						}
+						buttonClose={
+							<div className="o-button u-right">
+								<button className="c-button"> Close </button>
+							</div>
+						}>
+						<img className="popup-image" src="https://picsum.photos/400/400" alt="" />
+					</Popup>
+				</div>
 				
-				<div>
+				{/* <div>
 					<Slider
 						buttonNext={<button className="c-slider_button-inner c-slider_button-inner--next u-abs">next</button>}
 						buttonPrev={<button className="c-slider_button-inner c-slider_button-inner--prev u-abs">prev</button>}>
@@ -84,7 +110,7 @@ class App extends React.Component {
 							<img className="c-slider_image" src="https://picsum.photos/400/300" alt="" />
 						</Slide>
 					</Slider>
-				</div>
+				</div> */}
 				
 				<div className="o-form-item">
 					ToolTip

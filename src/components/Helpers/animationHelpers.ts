@@ -70,9 +70,34 @@ export const animationHelpers: any = {
     },
 
     /*
+    ** Use promise and set timeout to create animation timer for use in await / async
+    */
+    waitForAnimationFrame: function (animation: any, animationTime: number = 0) {
+        return new Promise((resolve, reject) => {
+            window && window.requestAnimationFrame(() => {
+                console.log(animationTime);
+                setTimeout(() => {
+                    resolve();
+                }, animationTime);
+            });
+        });
+    },
+
+    /*
     ** Use promise and requestAnimationFrame to transition to an elements natural height
     */
-    transitionNaturalHeight: function (element: HTMLElement, time: number, isOpen: boolean): Promise<any> {
+   transitionNaturalHeightTwo: (time: number) => {
+            
+        return animationHelpers.waitForAnimationFrame({bleh: 1}, time)
+        .then(animationHelpers.waitForAnimationFrame({bleh: 1}, time))
+        .then(animationHelpers.waitForAnimationFrame({bleh: 1}, time))
+        .then(animationHelpers.waitForAnimationFrame({bleh: 1}, time))
+
+    },
+    /*
+    ** Use promise and requestAnimationFrame to transition to an elements natural height
+    */
+    transitionNaturalHeight: async (element: HTMLElement, time: number, isOpen: boolean): Promise<any> => {
 
         let newHeight = 0;
 
@@ -130,3 +155,5 @@ export const animationHelpers: any = {
     }
 
 }
+
+animationHelpers.transitionNaturalHeightTwo(5000);

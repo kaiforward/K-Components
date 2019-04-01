@@ -43,6 +43,10 @@ class LinkedToggle extends React.Component<Props, State> {
         });
     }
 
+    componentDidMount(){
+
+    }
+
     render() {
 
         const { open } = this.state;
@@ -51,7 +55,7 @@ class LinkedToggle extends React.Component<Props, State> {
 
             <div>
                 <button type="button" onClick={this.toggle}>Switch</button>
-                <CheckHeight time={500} open={open}>
+                <CheckHeight time={500} open={!open}>
                     <div className={"c-anim_one"}>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus cumque, eligendi rem unde, consequuntur vitae, placeat quidem amet doloribus molestias ea enim asperiores perspiciatis est ipsa tempora! Aliquid, iusto inventore!
                     </div>

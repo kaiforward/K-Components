@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect, ReactReduxContext } from "react-redux";
-import { addToDo, updateText, toggleToDo, INCOMPLETE, COMPLETE, ALL } from "../../actions/toDo";
+import { addToDo, updateText, toggleToDo, INCOMPLETE, COMPLETE, ALL, removeToDo } from "../../actions/toDo";
 import store from "../../store/store";
 import { element } from 'prop-types';
 import ToDoItem from './ToDoItem';
@@ -61,7 +61,7 @@ class ToDo extends React.Component<Props, State> {
         if (text && title) {
 
             store.dispatch(addToDo({
-                uniqueId: title+toDoItems.length.toString(),
+                uniqueId: title+text+Math.random().toString(),
                 text: text,
                 title: title,
                 isComplete: false,
@@ -95,18 +95,18 @@ class ToDo extends React.Component<Props, State> {
                     toDoItems.map((element, index) => {
                         const isVisible: boolean = Boolean((mode === ALL) || (mode === COMPLETE && element.isComplete) || (mode === INCOMPLETE && !element.isComplete));
                         return (
-                            <Toggle key={ element.uniqueId+`_${index}`+'_TOGGLE' } toggle={isVisible} time={600} delay={index * 100} className={"c-todo_anim"} animClass={"c-todo_anim--show"}>
-                                <ToDoItem 
-                                    key={ element.uniqueId+`_${index}` }
-                                    uniqueId={ element.uniqueId } 
-                                    title={ element.title } 
-                                    text={ element.text } 
-                                    date={ element.date } 
-                                    isComplete={ element.isComplete }/>                                 
-                            </Toggle>
+                            <ToDoItem 
+                                key={ element.uniqueId+'_TOGGLE_ITEM' }
+                                uniqueId={ element.uniqueId } 
+                                title={ element.title } 
+                                text={ element.text } 
+                                date={ element.date } 
+                                isComplete={ element.isComplete }
+                                isOpen={ isVisible }
+                                animationTime={500 + (index*350)}/>
                         );
                     })
-                }    
+                }
                 </div>                                          
             </div>
 

@@ -43,26 +43,27 @@ export class Toggle extends React.Component<Props, State> {
     componentDidUpdate(prevProps, prevState) {
 
         if (prevProps.toggle !== this.props.toggle) {
-            !this.isAnimated && this.switchClass();
+            this.switchClass();
         }
 
     }
 
     componentDidMount() {
 
-        const { animClass, toggle, shouldCalculateHeight, style, time, delay } = this.props;
+        const { animClass, toggle, time, delay } = this.props;
         const ref: HTMLElement = this.animRef.current;
-        const { addClasses, setStyle, setTransitionTiming } = animationHelpers;
+        const { addClasses, setTransitionTiming } = animationHelpers;
 
         if (toggle) {
-            addClasses([animClass], ref);  
+            window && window.requestAnimationFrame(() => {
+                setTransitionTiming({time, delay}, ref);
+                addClasses([animClass], ref);
+            });
         }
 
     }
 
     async switchClass() { 
-
-        this.isAnimated = true;
 
         const { time, delay, toggle, animClass, callBack, } = this.props;
         const { setTransitionTiming, addClasses, removeClasses, timer, setStyle, removeStyle } = animationHelpers;
@@ -84,9 +85,7 @@ export class Toggle extends React.Component<Props, State> {
         setTransitionTiming({time: 0, delay: 0}, ref);
 
         callBack && callBack();
-
-        this.isAnimated = false;
-
+        
     }
 
     render() {
